@@ -1,23 +1,31 @@
-import logo from './logo.svg';
+import React, { Fragment, useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import Footer from './components/common/Footer';
+import Header from './components/common/Header';
+import { IdentityProvider } from './components/identity/IdentityContext';
+import Home from './components/routes/Home';
+
 
 function App() {
+
+  const [user, setUser] = useState(null);
+  const userValue = { user, setUser };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Fragment>
+        <IdentityProvider value={userValue}>
+          <Header />
+          <main>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/home" element={<Home />} />
+            </Routes>
+          </main>
+          <Footer />
+        </IdentityProvider>
+      </Fragment>
     </div>
   );
 }
